@@ -50,7 +50,7 @@
                         // 課題4-2. ストックを減らす。
                         this.stock--;
                         // 購入による商品の在庫削減処理
-                        // 課題4-3.文字列（今回の場合はstock）と一致したエレメントを抽出しテキスト表示。
+                        // 課題4-3.文字列（今回の場合はstock）と一致したエレメントを抽出し表示テキストを上書き。
                         document.getElementById("stock" + this.id).textContent = this.stock;
                         // 在庫用のエレメントを抽出し、HTML内の個数を更新
                     } else console.log(this.name+"は商品の在庫がないため購入できません。");
