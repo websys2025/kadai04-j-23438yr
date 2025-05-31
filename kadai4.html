@@ -36,7 +36,10 @@
                     console.log("商品は以下の" + Item.number + "種類です。");
 
                     // 配列の内容を項目毎に出力
-                    // 課題4-1. ここにコードを書く
+                    // 課題4-1 「list.forEach」文を利用して、配列内の商品の詳細を一括で出力
+                    list.forEach(It => {
+                        console.log("商品番号: " + It.id + ", 名前: " + It.name + ", 金額: " + It.price + "円, 在庫: " + It.stock);
+                    });
                     console.log(""); // 空行の出力
                 }
                 
@@ -44,10 +47,11 @@
                 buyItem() {          
                     if (this.stock >= 1) { 
                         console.log("商品番号: "+this.id+", 商品名: "+this.name+"を購入します。");
-                        // 課題4-2. ここにコードを書く
+                        // 課題4-2. ストックを減らす。
+                        this.stock--;
                         // 購入による商品の在庫削減処理
-                        
-                        // 課題4-3. ここにコードを書く
+                        // 課題4-3.文字列（今回の場合はstock）と一致したエレメントを抽出しテキスト表示。
+                        document.getElementById("stock" + this.id).textContent = this.stock;
                         // 在庫用のエレメントを抽出し、HTML内の個数を更新
                     } else console.log(this.name+"は商品の在庫がないため購入できません。");
                 }
@@ -61,19 +65,32 @@
             const item_list = new Array(items.length);
             const btn = new Array(items.length);
 
-            // 課題4-1. ここにコード書く
+            // 課題4-1. 商品オブジェクト「item_list」を生成
+             for (let i = 0; i < items.length; i++) {
+                item_list[i] = new Item(items[i].name, items[i].price, items[i].stock);
+            }
             // 商品オブジェクトの生成
 
-            // 課題4-2. ここにコードを書く
+            // 課題4-2. 作成した商品オブジェクト「item_list」とそれぞれの商品の購入ボタンを、「<td>」タグで整えた表の形にして出力
+            for (let i = 0; i < item_list.length; i++) {
+                itemArea.innerHTML += `
+                    <tr>
+                        <td>${item_list[i].name}</td>
+                        <td>${item_list[i].price}円</td>
+                        <td id="stock${item_list[i].id}">${item_list[i].stock}</td>
+                        <td><button id="button${item_list[i].id}">購入</button></td>
+                    </tr>
+                `;
+            }
             // 商品表の作成
 
             // クリックイベント時の購入処理の設定
             for (let i=0; i<item_list.length; i++) {
                 // 課題4-3. ここにコードを書く
                 // 課題4-1, 4-2のコードが完成したら、以下のコメントを外す
-                //document.getElementById("button"+item_list[i].id).onclick = () => {
-                //    item_list[i].buyItem();
-                //}
+                document.getElementById("button"+item_list[i].id).onclick = () => {
+                    item_list[i].buyItem();
+                }
             }
             Item.showItemList(item_list);
 
